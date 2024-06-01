@@ -10,7 +10,7 @@
       <div :class="cnReview('task-list')">
         <div v-for="param in timeAccess" :key="param.id">
           <input :class="cnMain('task-list_input')" type="radio" :id="param.id" :value="param.id"
-                 v-model="question1" required>
+                 v-model="question1" @change="updateQuestion1" required>
           <label :class="cnMain('task-list_label')" :for="param.id">{{ param.text }}</label>
         </div>
       </div>
@@ -20,7 +20,7 @@
       <div :class="cnReview('task-grading')">
         <div v-for="grade in grading" :key="grade">
           <input :class="cnMain('task-grading_input')" type="radio" :id="grade+'-2'" :value="grade"
-                 v-model="question2" required>
+                 v-model="question2" @change="updateQuestion2" required>
           <label :class="cnMain('task-grading_label')" :for="grade+'-2'">{{ grade }}</label>
         </div>
       </div>
@@ -30,7 +30,7 @@
       <div :class="cnReview('task-grading')">
         <div v-for="grade in grading" :key="grade">
           <input :class="cnMain('task-grading_input')" type="radio" :id="grade+'-3'" :value="grade"
-                 v-model="question3" required>
+                 v-model="question3" @change="updateQuestion3" required>
           <label :class="cnMain('task-grading_label')" :for="grade+'-3'">{{ grade }}</label>
         </div>
       </div>
@@ -40,7 +40,7 @@
       <div :class="cnReview('task-grading')">
         <div v-for="grade in grading" :key="grade">
           <input :class="cnMain('task-grading_input')" type="radio" :id="grade+'-4'" :value="grade"
-                 v-model="question4" required>
+                 v-model="question4" @change="updateQuestion4" required>
           <label :class="cnMain('task-grading_label')" :for="grade+'-4'">{{ grade }}</label>
         </div>
       </div>
@@ -50,7 +50,7 @@
       <div :class="cnReview('task-grading')">
         <div v-for="grade in grading" :key="grade">
           <input :class="cnMain('task-grading_input')" type="radio" :id="grade+'-5'" :value="grade"
-                 v-model="question5" required>
+                 v-model="question5" @change="updateQuestion5" required>
           <label :class="cnMain('task-grading_label')" :for="grade+'-5'">{{ grade }}</label>
         </div>
       </div>
@@ -60,7 +60,7 @@
       <div :class="cnReview('task-grading')">
         <div v-for="grade in grading10" :key="grade">
           <input :class="cnMain('task-grading_input')" type="radio" :id="grade+'-6'" :value="grade"
-                 v-model="question6" required>
+                 v-model="question6" @change="updateQuestion6" required>
           <label :class="cnMain('task-grading_label')" :for="grade+'-6'">{{ grade }}</label>
         </div>
       </div>
@@ -71,18 +71,28 @@
 </template>
 
 <script setup>
-import {cnReview} from "./review-page.const.js"
-import {computed, ref} from "vue";
+import {cnReview} from "./review-page.const.js";
+import {computed, ref, watchEffect} from "vue";
 import {useRoute} from "vue-router";
 import {gradeModel} from "../main-page/main-page.model.js";
 import {cnMain} from "../main-page/main-page.const.js";
-import {reviewModel} from "./review-page.model.js";
+import {reviewModel, useReviewStore} from "./review-page.model.js";
 import {router} from "../../router.js";
+import {createPinia} from 'pinia';
 
+const reviewStore = useReviewStore();
 const modelGrade = gradeModel();
 const modelReview = reviewModel();
+
 const route = useRoute();
 const grade = computed(() => route.query.grade || modelGrade.grade);
+
+reviewStore.question1 = window.localStorage.getItem('question1') || null;
+reviewStore.question2 = window.localStorage.getItem('question2') || null;
+reviewStore.question3 = window.localStorage.getItem('question3') || null;
+reviewStore.question4 = window.localStorage.getItem('question4') || null;
+reviewStore.question5 = window.localStorage.getItem('question5') || null;
+reviewStore.question6 = window.localStorage.getItem('question6') || null;
 
 const timeAccess = [
   {
@@ -96,41 +106,71 @@ const timeAccess = [
   {
     id: 3,
     text: 'Медленнеe, чем ожидал',
-  }]
-const grading = [1, 2, 3, 4, 5]
-const grading10 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-const question1 = ref({})
-const question2 = ref(null)
-const question3 = ref(null)
-const question4 = ref(null)
-const question5 = ref(null)
-const question6 = ref(null)
+  }
+];
+const grading = [1, 2, 3, 4, 5];
+const grading10 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const question1 = ref(reviewStore.question1 || null);
+const question2 = ref(reviewStore.question2 || null);
+const question3 = ref(reviewStore.question3 || null);
+const question4 = ref(reviewStore.question4 || null);
+const question5 = ref(reviewStore.question5 || null);
+const question6 = ref(reviewStore.question6 || null);
 
 let questionList = [];
 
 const isFormValid = computed(() => {
-  return question1.value != null && question2.value != null && question3.value != null && question4.value != null && question5.value != null && question6.value != null;
+  return (
+      question1.value !== null && question2.value !== null && question3.value !== null && question4.value !== null && question5.value !== null && question6.value !== null
+  );
 });
+
+function updateQuestion1(event) {
+  reviewStore.setQuestion1(event.target.value);
+}
+
+function updateQuestion2(event) {
+  reviewStore.setQuestion2(event.target.value);
+}
+
+function updateQuestion3(event) {
+  reviewStore.setQuestion3(event.target.value);
+}
+
+function updateQuestion4(event) {
+  reviewStore.setQuestion4(event.target.value);
+}
+
+function updateQuestion5(event) {
+  reviewStore.setQuestion5(event.target.value);
+}
+
+function updateQuestion6(event) {
+  reviewStore.setQuestion6(event.target.value);
+}
 
 function submit() {
   questionList = [];
-  const gradeList = [question1.value, question2.value, question3.value, question4.value, question5.value, question6.value];
+  const gradeList = [question1.value, question2.value, question3.value, question4.value, question5.value, question6.value,
+  ];
   for (let i = 1; i <= 6; i++) {
     let questionForm = JSON.stringify({
       questionID: i,
-      responseID: gradeList[i - 1]
+      responseID: parseInt(gradeList[i - 1]),
     });
     questionList.push(questionForm);
   }
-  modelReview.init(questionList)
+  modelReview.init(questionList);
   router.push({
-    path: "/complete", query: {
+    path: "/complete",
+    query: {
       grade: grade.value,
-      review: questionList
-    }
+      review: questionList,
+    },
   });
 }
 </script>
+
 
 <style lang="scss" scoped>
 .review-page {
