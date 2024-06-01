@@ -8,10 +8,10 @@
         1. Как быстро вы получили ответ от клиентского сервиса RUTUBE? *
       </h3>
       <div :class="cnReview('task-list')">
-        <div v-for="param in timeAccess" :key="param">
-          <input :class="cnMain('task-list_input')" type="radio" :id="param+'-1'" :value="param"
+        <div v-for="param in timeAccess" :key="param.id">
+          <input :class="cnMain('task-list_input')" type="radio" :id="param.id" :value="param.id"
                  v-model="question1" required>
-          <label :class="cnMain('task-list_label')" :for="param+'-1'">{{ param }}</label>
+          <label :class="cnMain('task-list_label')" :for="param.id">{{ param.text }}</label>
         </div>
       </div>
       <h3 :class="cnReview('task-header')">
@@ -76,15 +76,30 @@ import {computed, ref} from "vue";
 import {useRoute} from "vue-router";
 import {gradeModel} from "../main-page/main-page.model.js";
 import {cnMain} from "../main-page/main-page.const.js";
+import {reviewModel} from "./review-page.model.js";
+import {router} from "../../router.js";
 
 const modelGrade = gradeModel();
+const modelReview = reviewModel();
 const route = useRoute();
 const grade = computed(() => route.query.grade || modelGrade.grade);
 
-const timeAccess = ['Быстрее чем ожидал', 'Как и ожидал', 'Медленнеe, чем ожидал']
+const timeAccess = [
+  {
+    id: 1,
+    text: 'Быстрее чем ожидал',
+  },
+  {
+    id: 2,
+    text: 'Как и ожидал',
+  },
+  {
+    id: 3,
+    text: 'Медленнеe, чем ожидал',
+  }]
 const grading = [1, 2, 3, 4, 5]
 const grading10 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-const question1 = ref(null)
+const question1 = ref({})
 const question2 = ref(null)
 const question3 = ref(null)
 const question4 = ref(null)
@@ -97,19 +112,23 @@ const isFormValid = computed(() => {
   return question1.value != null && question2.value != null && question3.value != null && question4.value != null && question5.value != null && question6.value != null;
 });
 
-console.log(grade.value)
-
 function submit() {
   questionList = [];
   const gradeList = [question1.value, question2.value, question3.value, question4.value, question5.value, question6.value];
   for (let i = 1; i <= 6; i++) {
-    const questionForm = {
+    let questionForm = JSON.stringify({
       questionID: i,
-      responseValue: gradeList[i - 1]
-    };
+      responseID: gradeList[i - 1]
+    });
     questionList.push(questionForm);
-    console.log(questionList)
   }
+  modelReview.init(questionList)
+  router.push({
+    path: "/complete", query: {
+      grade: grade.value,
+      review: questionList
+    }
+  });
 }
 </script>
 
