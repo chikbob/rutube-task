@@ -1,16 +1,15 @@
 import {BaseModel} from "../../models/base.model.js";
 import {useStore} from "pinia-class-store";
 
-
-class GradeModel extends BaseModel {
+class CompleteModel extends BaseModel {
     constructor() {
         super();
-        this.grade = undefined;
+        this.complete = undefined;
     }
 
-    init(grade) {
-        this.grade = grade;
+    init(complete) {
+        this.complete = complete;
     }
 }
 
-export const gradeModel = useStore.bind(undefined, GradeModel);
+export const completeModel = useStore.bind(undefined, CompleteModel);

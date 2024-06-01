@@ -1,7 +1,12 @@
 <template>
   <div :class="cnReview('')">
     <div :class="cnReview('header')">
-      Пожалуйста, ответьте на дополнительные вопросы.
+      <div>
+        Пожалуйста, ответьте на дополнительные вопросы.
+      </div>
+      <div>
+        <img :class="cnReview('banner')" src="../../assets/review-banner.png" alt="review-banner.png">
+      </div>
     </div>
     <form :class="cnReview('task')" @submit.prevent="submit">
       <h3 :class="cnReview('task-header')">
@@ -66,7 +71,6 @@
       </div>
       <button :class="cnReview('task-access')" type="submit" :disabled="!isFormValid">Отправить ответы</button>
     </form>
-    <img :class="cnReview('banner')" src="../../assets/review-banner.png" alt="review-banner.png">
   </div>
 </template>
 
@@ -74,18 +78,18 @@
 import {cnReview} from "./review-page.const.js";
 import {computed, ref, watchEffect} from "vue";
 import {useRoute} from "vue-router";
-import {gradeModel} from "../main-page/main-page.model.js";
 import {cnMain} from "../main-page/main-page.const.js";
 import {reviewModel, useReviewStore} from "./review-page.model.js";
 import {router} from "../../router.js";
-import {createPinia} from 'pinia';
 
 const reviewStore = useReviewStore();
-const modelGrade = gradeModel();
 const modelReview = reviewModel();
 
 const route = useRoute();
 const grade = computed(() => route.query.grade || modelGrade.grade);
+const review = computed(() => route.query.review || modelReview.review);
+const storedValue = localStorage.getItem('reviewCompleteValue');
+let reviewComplete = ref(false)
 
 reviewStore.question1 = window.localStorage.getItem('question1') || null;
 reviewStore.question2 = window.localStorage.getItem('question2') || null;
@@ -93,6 +97,16 @@ reviewStore.question3 = window.localStorage.getItem('question3') || null;
 reviewStore.question4 = window.localStorage.getItem('question4') || null;
 reviewStore.question5 = window.localStorage.getItem('question5') || null;
 reviewStore.question6 = window.localStorage.getItem('question6') || null;
+
+// if (storedValue === 'true') {
+//   router.push({
+//     path: '/complete',
+//     query: {
+//       grade: grade.value,
+//       review: review.value
+//     }
+//   })
+// }
 
 const timeAccess = [
   {
@@ -160,12 +174,14 @@ function submit() {
     });
     questionList.push(questionForm);
   }
+  reviewComplete = true
   modelReview.init(questionList);
   router.push({
     path: "/complete",
     query: {
       grade: grade.value,
       review: questionList,
+      reviewComplete: reviewComplete
     },
   });
 }
@@ -179,6 +195,8 @@ function submit() {
   margin: 0 0 102px;
 
   &__header {
+    display: flex;
+
     margin: 16px 0 28px;
 
     color: rgb(191, 201, 212);
@@ -252,7 +270,6 @@ function submit() {
       }
     }
 
-
     &-access {
       display: flex;
       align-items: center;
@@ -282,8 +299,8 @@ function submit() {
     width: 581px;
     height: 540px;
 
-    left: 50rem;
-    bottom: 9rem;
+    left: 50%;
+    bottom: 20%;
   }
 }
 </style>

@@ -38,11 +38,13 @@ let grade = ref(null);
 const ratings = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const modelGrade = gradeModel();
+const storedValue = localStorage.getItem('reviewCompleteValue');
 
 function access(rating) {
   grade.value = rating;
   modelGrade.init(grade.value);
-  router.push({ path: "/review", query: { grade: grade.value } });
+
+  router.push({path: "/review", query: {grade: grade.value}});
 }
 </script>
 

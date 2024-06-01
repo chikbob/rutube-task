@@ -1,29 +1,29 @@
 <template>
-  <div :class="cnComplete('')">
-    <img :class="cnComplete('banner')" src="../../assets/complete-banner.png" alt="complete-banner.png">
-    <form :class="cnComplete('form')">
-      <div :class="cnComplete('form-header')">
-        Спасибо за обратную связь!
+  <div :class="cnAgain('')">
+    <img :class="cnAgain('banner')" src="../../assets/again-banner.png" alt="complete-banner.png">
+    <form :class="cnAgain('form')">
+      <div :class="cnAgain('form-header')">
+        Вы уже прошли этот опрос
       </div>
-      <div :class="cnComplete('form-description')">
-        Это поможет нам улучшить сервис
+      <div :class="cnAgain('form-description')">
+        Спасибо, что делитесь мнением и помогаете нам быть лучше
       </div>
-      <button :class="cnComplete('form-button')">
-        <a :class="cnComplete('form-button_text')" href="https://rutube.ru/" target="_blank">
-          Перейти на платформу
-        </a>
-      </button>
+      <a href="https://rutube.ru/">
+        <button :class="cnAgain('form-button')">
+          Перейти на RUTUBE
+        </button>
+      </a>
     </form>
   </div>
 </template>
 
 <script setup>
-import {cnComplete} from "./complete-page.const.js"
-import {computed, ref} from "vue";
+import {cnAgain} from "./again-page.const.js"
+import {computed} from "vue";
 import {useRoute} from "vue-router";
 import {gradeModel} from "../main-page/main-page.model.js";
 import {reviewModel} from "../review-page/review-page.model.js";
-import {completeModel} from "./complete-page.model.js"
+import {completeModel} from "../complete-page/complete-page.model.js"
 import {router} from "../../router.js";
 
 const modelGrade = gradeModel();
@@ -31,25 +31,24 @@ const modelReview = reviewModel();
 const modelComplete = completeModel();
 
 const route = useRoute();
+
 const grade = computed(() => route.query.grade || modelGrade.grade);
 const review = computed(() => route.query.review || modelReview.review);
 const reviewComplete = computed(() => route.query.reviewComplete || modelComplete.complete);
 const storedValue = localStorage.getItem('reviewCompleteValue');
+const currentRoute = router.currentRoute
+
+// if (currentRoute.value.path === '/again') {
+//   router.push({
+//     path: '/',
+//     query: {
+//       grade: grade.value,
+//       review: review.value
+//     }
+//   })
+// }
+
 const parsedReview = parseReviewArray(review.value)
-
-if (storedValue !== 'true') {
-  localStorage.setItem('reviewCompleteValue', reviewComplete.value);
-}
-
-if (storedValue === 'true') {
-  router.push({
-    path: '/again',
-    query: {
-      grade: grade.value,
-      review: review.value
-    }
-  })
-}
 
 console.log("Оценка: " + grade.value)
 console.log(parsedReview)
@@ -57,19 +56,25 @@ console.log(parsedReview)
 function parseReviewArray(reviewArray) {
   try {
     return reviewArray.map((item) => JSON.parse(item));
-  } catch (err) {
+  }
+  catch(err) {
     JSON.parse(reviewArray);
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.complete-page {
+.again-page {
   display: flex;
   flex-direction: column;
   align-items: center;
 
   width: 1053px;
+
+  &__banner {
+    width: 524px;
+    height: 232px;
+  }
 
   &__form {
     display: flex;
@@ -105,6 +110,7 @@ function parseReviewArray(reviewArray) {
       width: 222px;
       height: 44px;
 
+      color: rgb(255, 255, 255);
       font-size: 14px;
       font-weight: 700;
       line-height: 20px;
@@ -113,10 +119,6 @@ function parseReviewArray(reviewArray) {
 
       border-radius: 22px;
       background: rgb(0, 161, 231);
-
-      &_text {
-        color: rgb(255, 255, 255);
-      }
     }
   }
 }
