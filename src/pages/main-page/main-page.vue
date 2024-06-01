@@ -97,6 +97,10 @@ function access(rating) {
 
     &-input {
       display: none;
+
+      &:checked ~ label {
+        background: rgb(49, 60, 75);
+      }
     }
 
     &-item {
