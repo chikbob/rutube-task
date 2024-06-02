@@ -31,35 +31,57 @@ const modelReview = reviewModel();
 const modelComplete = completeModel();
 
 const route = useRoute();
-const grade = computed(() => route.query.grade || modelGrade.grade);
+let grade = computed(() => route.query.grade || modelGrade.grade);
 const review = computed(() => route.query.review || modelReview.review);
 const reviewComplete = computed(() => route.query.reviewComplete || modelComplete.complete);
 const storedValue = localStorage.getItem('reviewCompleteValue');
-const parsedReview = parseReviewArray(review.value)
+const question1 = localStorage.getItem('question1');
+const question2 = localStorage.getItem('question2');
+const question3 = localStorage.getItem('question3');
+const question4 = localStorage.getItem('question4');
+const question5 = localStorage.getItem('question5');
+const question6 = localStorage.getItem('question6')
+let firstLogin = ref(localStorage.getItem('firstLogin') || null)
 
-if (storedValue !== 'true') {
-  localStorage.setItem('reviewCompleteValue', reviewComplete.value);
-}
-
-if (storedValue === 'true') {
+if (question6 != null && firstLogin.value === 'false' || firstLogin.value === false) {
+  grade = localStorage.getItem('grade')
+  let questionList = [];
+  const gradeList = [question1, question2, question3, question4, question5, question6];
+  for (let i = 1; i <= 6; i++) {
+    let questionForm = JSON.stringify({
+      questionID: i,
+      responseID: parseInt(gradeList[i - 1]),
+    });
+    questionList.push(questionForm);
+  }
   router.push({
     path: '/again',
     query: {
-      grade: grade.value,
-      review: review.value
+      grade: grade,
+      review: questionList
     }
   })
 }
 
-console.log("Оценка: " + grade.value)
-console.log(parsedReview)
+else {
+  const parsedReview = parseReviewArray(review.value)
 
-function parseReviewArray(reviewArray) {
-  try {
-    return reviewArray.map((item) => JSON.parse(item));
-  } catch (err) {
-    JSON.parse(reviewArray);
+  if (storedValue !== 'true') {
+    localStorage.setItem('reviewCompleteValue', reviewComplete.value);
   }
+
+  console.log("Оценка: " + grade.value)
+  console.log(parsedReview)
+
+  function parseReviewArray(reviewArray) {
+    try {
+      return reviewArray.map((item) => JSON.parse(item));
+    } catch (err) {
+      JSON.parse(reviewArray);
+    }
+  }
+
+  localStorage.setItem('firstLogin', 'false')
 }
 </script>
 

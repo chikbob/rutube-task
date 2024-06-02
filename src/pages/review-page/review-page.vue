@@ -81,12 +81,13 @@ import {useRoute} from "vue-router";
 import {cnMain} from "../main-page/main-page.const.js";
 import {reviewModel, useReviewStore} from "./review-page.model.js";
 import {router} from "../../router.js";
+import {gradeModel} from "../main-page/main-page.model.js";
 
 const reviewStore = useReviewStore();
 const modelReview = reviewModel();
 
 const route = useRoute();
-const grade = computed(() => route.query.grade || modelGrade.grade);
+const grade = localStorage.getItem('grade')
 const review = computed(() => route.query.review || modelReview.review);
 const storedValue = localStorage.getItem('reviewCompleteValue');
 let reviewComplete = ref(false)
@@ -97,16 +98,6 @@ reviewStore.question3 = window.localStorage.getItem('question3') || null;
 reviewStore.question4 = window.localStorage.getItem('question4') || null;
 reviewStore.question5 = window.localStorage.getItem('question5') || null;
 reviewStore.question6 = window.localStorage.getItem('question6') || null;
-
-// if (storedValue === 'true') {
-//   router.push({
-//     path: '/complete',
-//     query: {
-//       grade: grade.value,
-//       review: review.value
-//     }
-//   })
-// }
 
 const timeAccess = [
   {
@@ -163,10 +154,28 @@ function updateQuestion6(event) {
   reviewStore.setQuestion6(event.target.value);
 }
 
+if (question6.value !== null) {
+  let questionList = [];
+  const gradeList = [question1.value, question2.value, question3.value, question4.value, question5.value, question6.value];
+  for (let i = 1; i <= 6; i++) {
+    let questionForm = JSON.stringify({
+      questionID: i,
+      responseID: parseInt(gradeList[i - 1]),
+    });
+    questionList.push(questionForm);
+  }
+  router.push({
+    path: '/again',
+    query: {
+      grade: grade,
+      review: questionList
+    }
+  })
+}
+
 function submit() {
   questionList = [];
-  const gradeList = [question1.value, question2.value, question3.value, question4.value, question5.value, question6.value,
-  ];
+  const gradeList = [question1.value, question2.value, question3.value, question4.value, question5.value, question6.value];
   for (let i = 1; i <= 6; i++) {
     let questionForm = JSON.stringify({
       questionID: i,
@@ -179,7 +188,7 @@ function submit() {
   router.push({
     path: "/complete",
     query: {
-      grade: grade.value,
+      grade: grade,
       review: questionList,
       reviewComplete: reviewComplete
     },

@@ -38,16 +38,6 @@ const reviewComplete = computed(() => route.query.reviewComplete || modelComplet
 const storedValue = localStorage.getItem('reviewCompleteValue');
 const currentRoute = router.currentRoute
 
-// if (currentRoute.value.path === '/again') {
-//   router.push({
-//     path: '/',
-//     query: {
-//       grade: grade.value,
-//       review: review.value
-//     }
-//   })
-// }
-
 const parsedReview = parseReviewArray(review.value)
 
 console.log("Оценка: " + grade.value)
