@@ -8,11 +8,11 @@
       <div :class="cnAgain('form-description')">
         Спасибо, что делитесь мнением и помогаете нам быть лучше
       </div>
-      <a href="https://rutube.ru/">
-        <button :class="cnAgain('form-button')">
+      <button :class="cnAgain('form-button')">
+        <a :class="cnAgain('form-button_text')" href="https://rutube.ru/" target="_blank">
           Перейти на RUTUBE
-        </button>
-      </a>
+        </a>
+      </button>
     </form>
   </div>
 </template>
@@ -45,8 +45,7 @@ console.log(parsedReview)
 function parseReviewArray(reviewArray) {
   try {
     return reviewArray.map((item) => JSON.parse(item));
-  }
-  catch(err) {
+  } catch (err) {
     JSON.parse(reviewArray);
   }
 }
@@ -99,7 +98,6 @@ function parseReviewArray(reviewArray) {
       width: 222px;
       height: 44px;
 
-      color: rgb(255, 255, 255);
       font-size: 14px;
       font-weight: 700;
       line-height: 20px;
@@ -108,6 +106,10 @@ function parseReviewArray(reviewArray) {
 
       border-radius: 22px;
       background: rgb(0, 161, 231);
+
+      &_text {
+        color: rgb(255, 255, 255);
+      }
     }
   }
 }
