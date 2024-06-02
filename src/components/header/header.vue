@@ -40,7 +40,7 @@ import {cnHeader} from "./header.const.js";
   margin: 0 113.5px;
 
   width: 1024px;
-  height: 96px;
+  height: 94px;
 
   border-bottom: 2px solid;
   border-image: linear-gradient(45deg, rgb(6, 153, 219),rgb(45, 94, 135) 25%,rgb(46, 42, 63) 50%,rgb(52, 25, 38) 75%,rgb(52, 25, 38) 100%) 1;

@@ -425,7 +425,7 @@ function submit() {
       color: rgb(255, 255, 255);
       font-size: 12px;
       font-weight: 400;
-      line-height: 20px;
+      margin: 8px 0;
     }
 
     &-list {
