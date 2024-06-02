@@ -196,8 +196,216 @@ function submit() {
 
 
 <style lang="scss" scoped>
+@import "../../../public/scss/media_mixin.scss";
+
 .review-page {
-  width: 1053px;
+  @include _1250 {
+    width: 1024px;
+    padding: 0 0 24px;
+    margin: 0 0 102px;
+
+    &__header {
+      display: flex;
+
+      margin: 16px 0 28px;
+
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 22px;
+    }
+
+    &__task {
+      &-header {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 20px;
+      }
+
+      &-list {
+        margin: 0 0 20px;
+
+        & label {
+          width: 200px;
+          height: 40px;
+
+          padding: 0 16px 0 16px;
+          margin: 0 0 8px;
+        }
+      }
+
+      &-grading {
+        display: flex;
+
+        margin: 0 0 28px;
+
+        & label {
+          width: 40px;
+          height: 40px;
+
+          margin: 0 8px 0 0;
+        }
+      }
+
+      &-access {
+        width: 222px;
+        height: 44px;
+
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 20px;
+      }
+    }
+
+    &__banner {
+      position: absolute;
+      width: 548px !important;
+      height: 509px !important;
+
+      left: 46% !important;
+      bottom: 20% !important;
+    }
+  }
+
+  @include _1024 {
+    width: 100% !important;
+    padding: 0 0 24px;
+    margin: 0 0 102px;
+
+    &__header {
+      display: flex;
+
+      margin: 16px 0 28px 16px !important;
+
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 22px;
+    }
+
+    &__task {
+      margin: 0 0 0 16px;
+
+      &-header {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 20px;
+      }
+
+      &-list {
+        margin: 0 0 20px;
+
+        & label {
+          width: 200px;
+          height: 40px;
+
+          padding: 0 16px 0 16px;
+          margin: 0 0 8px;
+        }
+      }
+
+      &-grading {
+        display: flex;
+
+        margin: 0 0 28px;
+
+        & label {
+          width: 40px;
+          height: 40px;
+
+          margin: 0 8px 0 0;
+        }
+      }
+
+      &-access {
+        width: 222px;
+        height: 44px;
+
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 20px;
+      }
+    }
+
+    &__banner {
+      position: relative;
+      width: 50% !important;
+      height: auto !important;
+      margin: 0 !important;
+
+      left: 50% !important;
+      bottom: 25% !important;
+    }
+  }
+
+  @include _768 {
+    width: 100% !important;
+    padding: 0 0 24px;
+    margin: 0 0 102px;
+
+    &__header {
+      display: flex;
+
+      margin: 16px 16px 28px !important;
+
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 22px;
+    }
+
+    &__task {
+      margin: 0 16px 0 !important;
+
+      &-header {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 20px;
+      }
+
+      &-list {
+        margin: 0 0 20px;
+
+        & label {
+          width: 200px;
+          height: 40px;
+
+          padding: 0 16px 0 16px;
+          margin: 0 0 8px;
+        }
+      }
+
+      &-grading {
+        display: flex;
+        flex-wrap: wrap;
+
+        margin: 0 0 28px;
+
+        & label {
+          width: 40px;
+          height: 40px;
+
+          margin: 0 8px 0 0;
+        }
+      }
+
+      &-access {
+        width: 222px;
+        height: 44px;
+
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 20px;
+      }
+    }
+
+    &__banner {
+      display: none;
+    }
+  }
+
+  @include _375 {
+
+  }
+
+  width: 1024px;
   padding: 0 0 24px;
   margin: 0 0 102px;
 

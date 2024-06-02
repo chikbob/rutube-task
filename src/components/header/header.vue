@@ -11,18 +11,39 @@ import {cnHeader} from "./header.const.js";
 </script>
 
 <style lang="scss">
+@import "../../../public/scss/media_mixin.scss";
 
 .header {
+  @include _1250 {
+    width: 100% !important;
+    margin: 0 !important;
+
+    &__logo {
+      margin: 0 0 0 20px;
+    }
+  }
+
+  @include _1024 {
+  }
+
+  @include _768 {
+
+  }
+
+  @include _375 {
+
+  }
+
   display: flex;
   align-items: center;
 
   margin: 0 113.5px;
 
-  width: 1053px;
+  width: 1024px;
   height: 96px;
 
   border-bottom: 2px solid;
-  border-image: linear-gradient(45deg, rgb(6, 153, 219),rgb(45, 94, 135) 25%,rgb(46, 42, 63) 50%,rgb(52, 25, 38) 75%,rgb(21, 12, 21) 100%) 1;
+  border-image: linear-gradient(45deg, rgb(6, 153, 219),rgb(45, 94, 135) 25%,rgb(46, 42, 63) 50%,rgb(52, 25, 38) 75%,rgb(52, 25, 38) 100%) 1;
 
   &__logo {
     width: 148px;

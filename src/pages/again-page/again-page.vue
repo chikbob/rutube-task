@@ -6,7 +6,7 @@
         Вы уже прошли этот опрос
       </div>
       <div :class="cnAgain('form-description')">
-        Спасибо, что делитесь мнением и помогаете нам быть лучше
+        Спасибо, что делитесь мнением<br>и помогаете нам быть лучше
       </div>
       <a href="https://rutube.ru/" target="_blank" :class="cnAgain('form-button')">
         Перейти на RUTUBE
@@ -50,7 +50,53 @@ function parseReviewArray(reviewArray) {
 </script>
 
 <style lang="scss" scoped>
+@import "../../../public/scss/media_mixin.scss";
+
 .again-page {
+  @include _1250 {
+    width: 100% !important;
+  }
+
+  @include _1024 {
+
+  }
+
+  @include _665 {
+    &__banner {
+      width: 100% !important;
+      height: auto !important;
+
+      margin: 21px 0 0;
+    }
+
+    &__form {
+      width: 100% !important;
+      height: 177px;
+
+      margin: 22px 0 0 !important;
+      padding: 0 !important;
+
+      &-header {
+        font-size: 22px !important;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      &-description {
+        width: 100% !important;
+
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 22px;
+
+        margin: 14px 0 !important;
+      }
+    }
+
+
+  }
+
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -80,10 +126,15 @@ function parseReviewArray(reviewArray) {
     }
 
     &-description {
+      width: 530px;
+      height: 44px;
+
       color: rgb(255, 255, 255);
       font-size: 17px;
       font-weight: 400;
       line-height: 22px;
+
+      text-align: center;
 
       margin: 28px 0;
     }

@@ -85,7 +85,49 @@ else {
 </script>
 
 <style lang="scss" scoped>
+@import "../../../public/scss/media_mixin.scss";
+
 .complete-page {
+
+  @include _1250 {
+    width: 100% !important;
+  }
+
+  @include _1024 {
+
+  }
+
+  @include _665 {
+    &__form {
+      width: 100% !important;
+      height: 177px;
+
+      margin: 22px 0 0 !important;
+      padding: 0 !important;
+
+      &-header {
+        color: rgb(255, 255, 255);
+        font-size: 22px !important;
+        font-weight: 700;
+      }
+
+      &-description {
+        color: rgb(255, 255, 255);
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 22px;
+
+        margin: 14px 0 !important;
+      }
+    }
+
+    &__banner {
+      width: 100%;
+
+      margin: 21px 0 0;
+    }
+  }
+
   display: flex;
   flex-direction: column;
   align-items: center;
