@@ -8,11 +8,9 @@
       <div :class="cnAgain('form-description')">
         Спасибо, что делитесь мнением и помогаете нам быть лучше
       </div>
-      <button :class="cnAgain('form-button')">
-        <a :class="cnAgain('form-button_text')" href="https://rutube.ru/" target="_blank">
-          Перейти на RUTUBE
-        </a>
-      </button>
+      <a href="https://rutube.ru/" target="_blank" :class="cnAgain('form-button')">
+        Перейти на RUTUBE
+      </a>
     </form>
   </div>
 </template>
@@ -98,6 +96,7 @@ function parseReviewArray(reviewArray) {
       width: 222px;
       height: 44px;
 
+      color: rgb(255, 255, 255);
       font-size: 14px;
       font-weight: 700;
       line-height: 20px;
@@ -106,10 +105,6 @@ function parseReviewArray(reviewArray) {
 
       border-radius: 22px;
       background: rgb(0, 161, 231);
-
-      &_text {
-        color: rgb(255, 255, 255);
-      }
     }
   }
 }

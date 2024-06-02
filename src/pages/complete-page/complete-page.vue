@@ -8,11 +8,9 @@
       <div :class="cnComplete('form-description')">
         Это поможет нам улучшить сервис
       </div>
-      <button :class="cnComplete('form-button')">
-        <a :class="cnComplete('form-button_text')" href="https://rutube.ru/" target="_blank">
-          Перейти на платформу
-        </a>
-      </button>
+      <a href="https://rutube.ru/" target="_blank" :class="cnAgain('form-button')">
+        Перейти на платформу
+      </a>
     </form>
   </div>
 </template>
@@ -25,6 +23,7 @@ import {gradeModel} from "../main-page/main-page.model.js";
 import {reviewModel} from "../review-page/review-page.model.js";
 import {completeModel} from "./complete-page.model.js"
 import {router} from "../../router.js";
+import {cnAgain} from "../again-page/again-page.const.js";
 
 const modelGrade = gradeModel();
 const modelReview = reviewModel();
@@ -119,7 +118,7 @@ else {
       margin: 28px 0;
     }
 
-    &-button {
+    & a {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -127,6 +126,7 @@ else {
       width: 222px;
       height: 44px;
 
+      color: rgb(255, 255, 255);
       font-size: 14px;
       font-weight: 700;
       line-height: 20px;
@@ -135,10 +135,6 @@ else {
 
       border-radius: 22px;
       background: rgb(0, 161, 231);
-
-      &_text {
-        color: rgb(255, 255, 255);
-      }
     }
   }
 }
