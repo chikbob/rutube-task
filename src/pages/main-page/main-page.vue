@@ -33,7 +33,6 @@ import {cnMain} from "./main-page.const.js"
 import {ref} from "vue";
 import {gradeModel} from "./main-page.model.js";
 import {router} from "../../router.js";
-import {useReviewStore} from "../review-page/review-page.model.js";
 
 let grade = ref(null);
 const ratings = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];

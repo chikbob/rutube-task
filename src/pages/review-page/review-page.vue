@@ -76,12 +76,11 @@
 
 <script setup>
 import {cnReview} from "./review-page.const.js";
-import {computed, ref, watchEffect} from "vue";
+import {computed, ref} from "vue";
 import {useRoute} from "vue-router";
 import {cnMain} from "../main-page/main-page.const.js";
 import {reviewModel, useReviewStore} from "./review-page.model.js";
 import {router} from "../../router.js";
-import {gradeModel} from "../main-page/main-page.model.js";
 
 const reviewStore = useReviewStore();
 const modelReview = reviewModel();
@@ -89,7 +88,6 @@ const modelReview = reviewModel();
 const route = useRoute();
 const grade = localStorage.getItem('grade')
 const review = computed(() => route.query.review || modelReview.review);
-const storedValue = localStorage.getItem('reviewCompleteValue');
 let reviewComplete = ref(false)
 
 reviewStore.question1 = window.localStorage.getItem('question1') || null;

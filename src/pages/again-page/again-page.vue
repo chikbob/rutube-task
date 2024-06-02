@@ -23,20 +23,19 @@ import {computed} from "vue";
 import {useRoute} from "vue-router";
 import {gradeModel} from "../main-page/main-page.model.js";
 import {reviewModel} from "../review-page/review-page.model.js";
-import {completeModel} from "../complete-page/complete-page.model.js"
 import {router} from "../../router.js";
 
 const modelGrade = gradeModel();
 const modelReview = reviewModel();
-const modelComplete = completeModel();
-
 const route = useRoute();
+const currentUrl = window.location.href;
+
+if (currentUrl === 'http://localhost:5173/again') {
+  router.go(-1)
+}
 
 const grade = computed(() => route.query.grade || modelGrade.grade);
 const review = computed(() => route.query.review || modelReview.review);
-const reviewComplete = computed(() => route.query.reviewComplete || modelComplete.complete);
-const storedValue = localStorage.getItem('reviewCompleteValue');
-const currentRoute = router.currentRoute
 
 const parsedReview = parseReviewArray(review.value)
 
